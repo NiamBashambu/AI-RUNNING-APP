@@ -49,6 +49,8 @@ ensemble_model.fit(X_train_scaled, y_train)
 y_pred = ensemble_model.predict(X_test_scaled)
 mse = mean_squared_error(y_test, y_pred)
 print(f'Mean Squared Error: {mse}')
+#for ensemble model: varries around 3-4 mse
+#for nn_model: all over the place
 
 # Plot the actual vs predicted pace
 plt.figure(figsize=(10, 6))
