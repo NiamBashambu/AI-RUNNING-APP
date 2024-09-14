@@ -3,7 +3,7 @@ const axios = require('axios');
 require('dotenv').config();
 
 const app = express();
-const port = 3000;
+const port = 2000;
 
 // Middleware to parse JSON responses
 app.use(express.json());
@@ -14,7 +14,7 @@ let accessToken = 'c33a57295fee4af9a5e105e4151e8582716a6354';
 let refreshToken = '3c84605cd0865af26c16c454d3281fca94d44a41';
 let expiresAt = '2024-09-14T21:39:45Z';
 
-// Step 1: Redirect user to Strava's OAuth page
+// Redirect user to Strava's OAuth page
 app.get('/auth/strava', (req, res) => {
   const params = new URLSearchParams({
     client_id: process.env.CLIENT_ID,
@@ -26,7 +26,7 @@ app.get('/auth/strava', (req, res) => {
   res.redirect(`https://www.strava.com/oauth/authorize?${params.toString()}`);
 });
 
-// Step 2: Handle OAuth callback and exchange code for tokens
+//  Handle OAuth callback and exchange code for tokens
 app.get('/auth/callback', async (req, res) => {
   const { code } = req.query;
 
@@ -84,7 +84,7 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// Step 3: Fetch and display user activities
+// Fetch and display user activities
 app.get('/activities', async (req, res) => {
   try {
     const response = await axios.get('https://www.strava.com/api/v3/athlete/activities', {
@@ -92,7 +92,7 @@ app.get('/activities', async (req, res) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-
+    console.log('Activities response:', response.data);
     res.json(response.data);
   } catch (error) {
     console.error('Error fetching activities:', error.response.data);
