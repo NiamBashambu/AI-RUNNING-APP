@@ -7,6 +7,8 @@ from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 from sampledata import generate_sample_data
 
+from sklearn.ensemble import VotingRegressor
+
 
 df = generate_sample_data()
 
@@ -32,8 +34,17 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
 # train the neural network model
-nn_model = MLPRegressor(hidden_layer_sizes=(100, 50), activation='relu', solver='adam', max_iter=500, random_state=42)
+#did early stopping to prevent overfitting
+nn_model = MLPRegressor(hidden_layer_sizes=(100, 50), activation='relu', solver='adam', max_iter=500, random_state=42, early_stopping=True, validation_fraction=0.1, n_iter_no_change=10)
 nn_model.fit(X_train_scaled, y_train)
+
+#another model to see if difference in MSE
+#combining to different models together
+#model1 = MLPRegressor(hidden_layer_sizes=(100, 50), activation='relu', solver='adam', max_iter=500, random_state=42)
+#model2 = MLPRegressor(hidden_layer_sizes=(50, 50), activation='relu', solver='adam', max_iter=500, random_state=42)
+
+#ensemble_model = VotingRegressor(estimators=[('model1', model1), ('model2', model2)])
+#ensemble_model.fit(X_train_scaled, y_train)
 
 y_pred = nn_model.predict(X_test_scaled)
 mse = mean_squared_error(y_test, y_pred)
