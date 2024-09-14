@@ -25,3 +25,4 @@ backend and cloud services
     AWS cloud services
     MongoDB for data storage
     
+thats it so far
