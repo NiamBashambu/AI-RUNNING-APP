@@ -118,13 +118,13 @@ require('dotenv').config();
 const app = express();
 const port = 3000;
 
-// Step 1: Redirect to Strava's OAuth authorization page
+// Redirect to Strava's OAuth authorization page
 app.get('/login', (req, res) => {
   const stravaAuthUrl = `https://www.strava.com/oauth/authorize?client_id=${process.env.CLIENT_ID}&redirect_uri=${process.env.REDIRECT_URI}&response_type=code&scope=read,activity:read_all`;
   res.redirect(stravaAuthUrl);
 });
 
-// Step 2: Handle OAuth redirect and get access token
+// Handle OAuth redirect and get access token
 app.get('/redirect', async (req, res) => {
   const authorizationCode = req.query.code;
 
@@ -152,7 +152,7 @@ app.get('/redirect', async (req, res) => {
   }
 });
 
-// Step 3: Helper function to refresh expired tokens
+// Helper function to refresh expired tokens
 const refreshAccessToken = async (athlete_id) => {
   const token = await Token.findOne({ athlete_id });
 
@@ -190,7 +190,7 @@ const refreshAccessToken = async (athlete_id) => {
   }
 };
 
-// Step 4: Fetch user activities, refreshing token if needed
+//  Fetch user activities, refreshing token if needed
 app.get('/activities', async (req, res) => {
   const athlete_id = req.query.athlete_id;
 
