@@ -1,3 +1,8 @@
+
+//currently not in use
+//needed for when using mongoDB
+
+
 const mongoose = require('mongoose');
 
 const mongoURI = 'mongodb://localhost:27017/strava';  // Replace with MongoDB URI
