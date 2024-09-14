@@ -3,16 +3,17 @@ const axios = require('axios');
 require('dotenv').config();
 
 const app = express();
-const port = 2000;
+const port = 1000;
+const fs = require('fs');
 
 // Middleware to parse JSON responses
 app.use(express.json());
 
 // In-memory storage for tokens (for demonstration purposes)
 // In production, use a database
-let accessToken = 'c33a57295fee4af9a5e105e4151e8582716a6354';
-let refreshToken = '3c84605cd0865af26c16c454d3281fca94d44a41';
-let expiresAt = '2024-09-14T21:39:45Z';
+let accessToken = '54f01bbb30e750c69fcfcb3eea05550b3fb31bd7';
+let refreshToken = 'cdec0b698f2012ec7db768e2a463de3a236504fc';
+let expiresAt = '2024-09-15T02:19:04Z';
 
 // Redirect user to Strava's OAuth page
 app.get('/auth/strava', (req, res) => {
@@ -92,12 +93,30 @@ app.get('/activities', async (req, res) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log('Activities response:', response.data);
-    res.json(response.data);
+
+    const activities = response.data;
+
+    // Save activities to a file
+    const filePath = './activities.json';
+    fs.writeFile(filePath, JSON.stringify(activities, null, 2), (err) => {
+      if (err) {
+        console.error('Error writing activities to file:', err);
+        return res.status(500).send('Failed to write activities to file');
+      }
+      console.log(`Activities saved to ${filePath}`);
+    });
+
+    // Send the activities as a response
+    
+    res.json(activities);
+    
+
+  
   } catch (error) {
     console.error('Error fetching activities:', error.response.data);
     res.status(500).send('Failed to fetch activities');
   }
+  
 });
 
 // Start the server

@@ -10,7 +10,7 @@ from sampledata import generate_sample_data
 from sklearn.ensemble import VotingRegressor
 
 
-df = generate_sample_data()
+df = pd.read_json("/Users/niambashambu/Desktop/AI-RUNNING-APP/activities.json")
 
 # Filter for runs
 df_runs = df[df['type'] == 'Run'].copy()

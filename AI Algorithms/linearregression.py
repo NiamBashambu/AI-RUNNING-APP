@@ -13,7 +13,8 @@ from sampledata import generate_sample_data
 
 
 
-df = generate_sample_data()
+
+df = pd.read_json("/Users/niambashambu/Desktop/AI-RUNNING-APP/activities.json")
 
 df_runs = df[df['type'] == 'Run'].copy()
 
@@ -26,7 +27,7 @@ df_runs['speed_kmh'] = (df_runs['distance_km'] / df_runs['moving_time_min']) * 6
 df_runs.fillna(0, inplace=True)
 
 print(df_runs[['id', 'name', 'distance_km', 'moving_time_min', 'pace_min_per_km', 'speed_kmh']])
-
+print(df_runs['start_date'])
 
 X = df_runs[['distance_km', 'total_elevation_gain']]  # Features
 y = df_runs['pace_min_per_km']  # Target variable (pace)
