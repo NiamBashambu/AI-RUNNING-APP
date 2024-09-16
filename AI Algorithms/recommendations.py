@@ -15,6 +15,7 @@ def calculate_pace(distance, moving_time):
     return pace / 60  # convert to minutes per km
 
 # Function to generate recommendations based on activity data
+#need to make the recconmendations change based off the runners actual performance
 def generate_recommendations(activity):
     recommendations = []
 
