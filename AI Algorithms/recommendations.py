@@ -51,9 +51,5 @@ def generate_recommendations(activity):
 # Apply the function to each row in the DataFrame
 data['recommendations'] = data.apply(lambda row: generate_recommendations(row), axis=1)
 
-# Print recommendations
-for idx, row in data.iterrows():
-    print(f"Recommendations for activity '{row['name']}' on {row['start_date']}:")
-    for rec in row['recommendations']:
-        print(f"- {rec}")
-    print()
+# Save recommendations to a new JSON file
+data['recommendations'].to_json("/Users/niambashambu/Desktop/AI-RUNNING-APP/activities_with_recommendations.json", orient='records', lines=True)

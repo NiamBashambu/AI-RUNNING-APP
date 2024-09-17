@@ -1,7 +1,7 @@
 const express = require('express');
 const axios = require('axios');
-require('dotenv').config();
 const fs = require('fs');
+require('dotenv').config();
 
 const app = express();
 const port = 1000;
@@ -84,7 +84,8 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// Fetch and display user activities
+
+// Fetch and display user activities with recommendations
 app.get('/activities', async (req, res) => {
   try {
     const response = await axios.get('https://www.strava.com/api/v3/athlete/activities', {
@@ -106,12 +107,24 @@ app.get('/activities', async (req, res) => {
     });
 
     // Send the activities as a response
+    
     res.json(activities);
+    
 
+  
   } catch (error) {
     console.error('Error fetching activities:', error.response.data);
     res.status(500).send('Failed to fetch activities');
   }
+  
+  const filePath = './activities_with_recommendations.json';
+  fs.readFile(filePath, (err, data) => {
+    if (err) {
+      console.error('Error reading activities file:', err);
+      return res.status(500).send('Failed to read activities file');
+    }
+    res.json(JSON.parse(data));
+  });
 });
 
 // Start the server
