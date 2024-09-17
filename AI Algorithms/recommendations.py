@@ -15,6 +15,7 @@ def calculate_pace(distance, moving_time):
     return pace / 60  # convert to minutes per km
 
 # Function to generate recommendations based on activity data
+#need to make the recconmendations change based off the runners actual performance
 def generate_recommendations(activity):
     recommendations = []
 
@@ -50,5 +51,9 @@ def generate_recommendations(activity):
 # Apply the function to each row in the DataFrame
 data['recommendations'] = data.apply(lambda row: generate_recommendations(row), axis=1)
 
-# Save recommendations to a new JSON file
-data['recommendations'].to_json("/Users/niambashambu/Desktop/AI-RUNNING-APP/activities_with_recommendations.json", orient='records', lines=True)
+# Print recommendations
+for idx, row in data.iterrows():
+    print(f"Recommendations for activity '{row['name']}' on {row['start_date']}:")
+    for rec in row['recommendations']:
+        print(f"- {rec}")
+    print()
