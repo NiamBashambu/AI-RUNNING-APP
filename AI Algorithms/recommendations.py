@@ -1,6 +1,6 @@
 import pandas as pd
 from datetime import datetime
-
+import json
 # Load JSON data into a DataFrame
 df = pd.read_json("/Users/niambashambu/Desktop/AI-RUNNING-APP/activities.json")
 
@@ -57,3 +57,11 @@ for idx, row in data.iterrows():
     for rec in row['recommendations']:
         print(f"- {rec}")
     print()
+
+
+recommendations_json = data[['name', 'start_date', 'recommendations']].to_dict(orient='records')
+
+# Save to a JSON file
+output_file = '/Users/niambashambu/Desktop/AI-RUNNING-APP/recommendations.json'
+with open(output_file, 'w') as f:
+    json.dump(recommendations_json, f, indent=4)
