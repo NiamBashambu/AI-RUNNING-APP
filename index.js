@@ -1,6 +1,8 @@
 const express = require('express');
 const axios = require('axios');
 require('dotenv').config();
+const { exec } = require('child_process');
+
 
 const app = express();
 const port = 1000;
@@ -118,6 +120,7 @@ app.get('/activities', async (req, res) => {
   }
   
 });
+
 
 // Start the server
 app.listen(port, () => {
