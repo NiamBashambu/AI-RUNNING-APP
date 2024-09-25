@@ -118,6 +118,7 @@ app.get('/activities', async (req, res) => {
       // Send the output of the Python script as the response
       res.json({ message: 'Activities processed', result: stdout });
     });
+    
   
   } catch (error) {
     console.error('Error fetching activities:', error.response.data);
