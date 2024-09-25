@@ -97,6 +97,7 @@ app.get('/activities', async (req, res) => {
     });
 
     const activities = response.data;
+    
 
     // Save activities to a file
     const filePath = './activities.json';
