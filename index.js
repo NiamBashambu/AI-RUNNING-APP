@@ -97,23 +97,27 @@ app.get('/activities', async (req, res) => {
     });
 
     const activities = response.data;
-    
 
-    // Save activities to a file
-    const filePath = './activities.json';
-    fs.writeFile(filePath, JSON.stringify(activities, null, 2), (err) => {
-      if (err) {
-        console.error('Error writing activities to file:', err);
-        return res.status(500).send('Failed to write activities to file');
+
+    const activitiesJson = JSON.stringify(activities);
+
+    // Call the Python script with the activities data
+    exec(`python3 recommendations.py '${activitiesJson}'`, (error, stdout, stderr) => {
+      if (error) {
+        console.error('Error executing Python script:', error.message);
+        return res.status(500).send('Failed to process activities with Python script');
       }
-      console.log(`Activities saved to ${filePath}`);
+
+      if (stderr) {
+        console.error('Python script stderr:', stderr);
+        return res.status(500).send('Python script error');
+      }
+
+      console.log('Python script output:', stdout);
+
+      // Send the output of the Python script as the response
+      res.json({ message: 'Activities processed', result: stdout });
     });
-
-    // Send the activities as a response
-    
-    res.json(activities);
-    
-
   
   } catch (error) {
     console.error('Error fetching activities:', error.response.data);
