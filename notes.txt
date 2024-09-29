@@ -29,8 +29,6 @@ thats it so far
 
 
 
-- link the python file to the js
 - create  front end in swift and link to js
  - learn swift
  - after all this: update pythom models to be more advanced
- 
