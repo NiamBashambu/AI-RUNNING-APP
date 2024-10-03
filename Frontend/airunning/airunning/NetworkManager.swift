@@ -7,7 +7,7 @@ class NetworkManager {
 
     // Perform a request to authenticate with Strava
     func authenticateWithStrava(completion: @escaping (String?, Error?) -> Void) {
-        guard let url = URL(string: "http://localhost:2000/auth/strava") else {
+        guard let url = URL(string: "https://optirun.onrender.com/auth/strava") else {
             completion(nil, NSError(domain: "NetworkManager", code: 1, userInfo: [NSLocalizedDescriptionKey: "Invalid authentication URL"]))
             return
         }
@@ -19,7 +19,7 @@ class NetworkManager {
 
     // Exchange authorization code for tokens
     func exchangeCodeForTokens(code: String, completion: @escaping (Error?) -> Void) {
-        guard let url = URL(string: "http://localhost:2000/auth/callback?code=\(code)") else {
+        guard let url = URL(string: "https://optirun.onrender.com/auth/callback") else {
             completion(NSError(domain: "NetworkManager", code: 2, userInfo: [NSLocalizedDescriptionKey: "Invalid callback URL"]))
             return
         }
@@ -31,7 +31,7 @@ class NetworkManager {
 
     // Fetch activities from the backend
     func fetchActivities(completion: @escaping ([Activity]?, Error?) -> Void) {
-        guard let url = URL(string: "http://localhost:2000/activities") else {
+        guard let url = URL(string: "https://optirun.onrender.com/activities") else {
             completion(nil, NSError(domain: "NetworkManager", code: 3, userInfo: [NSLocalizedDescriptionKey: "Invalid activities URL"]))
             return
         }
