@@ -145,5 +145,3 @@ app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
   console.log(`Authorize the app by visiting http://localhost:${port}/auth/strava`);
 });
-
-
